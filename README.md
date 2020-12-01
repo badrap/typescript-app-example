@@ -1,4 +1,4 @@
-# typescript-app-ui
+# typescript-app-example
 
 ## Development with VSCode devcontainers
 
