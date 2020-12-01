@@ -3,7 +3,7 @@
 ## Development with VSCode devcontainers
 
 Instead of running docker-compose from the command line you can use Visual Studio Code's
-[Remove Development extension pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
+[Remote Development extension pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
 to automatically bootstrap an development environment with appropriate VSCode extensions and such.
 
 Install the extension (and other requirements - see ["Developing inside a Container"](https://code.visualstudio.com/docs/remote/containers)).
