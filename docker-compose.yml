@@ -1,0 +1,30 @@
+version: "3.7"
+
+services:
+  emulator:
+    init: true
+    image: ghcr.io/badrap/emulator:v0.8.1
+    environment:
+      APP_URL: http://localhost:4005/app
+    network_mode: service:app
+
+  app:
+    init: true
+    user: node
+    build:
+      target: dev
+      context: .
+    command: /bin/sh -c 'yarn --frozen-lockfile --mutex file:/tmp/.yarn-mutex && yarn dev'
+    volumes:
+      - .:/app:cached
+      - /app/node_modules
+      - /app/dist
+      - /home/node/.cache/yarn
+      - /home/node/.vscode-server/extensions
+      - /home/node/.vscode-server-insiders/extensions
+    environment:
+      API_URL: http://localhost:4004/api
+      API_TOKEN: 111111111-2222-3333-44444-555555555555
+    ports:
+      - "127.0.0.1:4004:4004"
+      - "127.0.0.1:4005:4005"
