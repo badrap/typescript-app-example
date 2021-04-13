@@ -1,3 +1,4 @@
+import { AddressInfo } from "net";
 import express from "express";
 import morgan from "morgan";
 import { API } from "./lib/api";
@@ -18,7 +19,8 @@ const app = express();
 app.use(morgan(NODE_ENV === "production" ? "combined" : "dev"));
 app.use("/app", createRouter(api));
 const server = app.listen(process.env.PORT || 4005, () => {
-  console.log(`Listening on ${server.address()}...`);
+  const addr = server.address() as AddressInfo;
+  console.log(`Listening on port ${addr.port}...`);
 });
 
 process.on("unhandledRejection", (err) => {
