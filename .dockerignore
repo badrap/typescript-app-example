@@ -8,4 +8,6 @@ docker-compose*
 README.md
 LICENSE
 .vscode
+.devcontainer
+.eslintrc.js
 dist

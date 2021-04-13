@@ -8,11 +8,10 @@ services:
     network_mode: service:app
 
   app:
-    user: node
     build:
-      target: dev
+      target: workspace
       context: .
-    command: /bin/sh -c 'yarn --frozen-lockfile --mutex file:/tmp/.yarn-mutex && yarn dev'
+    command: yarn dev
     volumes:
       - .:/app:cached
       - /app/node_modules
