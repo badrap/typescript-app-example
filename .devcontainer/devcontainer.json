@@ -1,15 +1,14 @@
 {
-	"name": "Existing Docker Compose (Extend)",
-	"dockerComposeFile": ["../docker-compose.yml"],
-	"service": "app",
-	"workspaceFolder": "/app",
-	"settings": {
-		"terminal.integrated.shell.linux": null
-	},
-	"extensions": [
-		"ms-azuretools.vscode-docker",
-		"dbaeumer.vscode-eslint",
-		"esbenp.prettier-vscode"
-	],
-	"postCreateCommand": "yarn --frozen-lockfile --mutex file:/tmp/.yarn-mutex"
+  "name": "Existing Docker Compose (Extend)",
+  "dockerComposeFile": ["../docker-compose.yml"],
+  "service": "app",
+  "workspaceFolder": "/app",
+  "settings": {
+    "terminal.integrated.shell.linux": null
+  },
+  "extensions": [
+    "ms-azuretools.vscode-docker",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
+  ]
 }
