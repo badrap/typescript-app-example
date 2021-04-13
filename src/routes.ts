@@ -16,7 +16,7 @@ export function createRouter(api: API): express.Router {
   });
 
   router.post("/ui", express.json(), async (req, res) => {
-    const { action = {}, clientState = {} } = req.body.payload;
+    const { action = {}, clientState = {} } = req.body;
 
     const { state } = await api.updateInstallation(
       res.locals.token.installationId,
@@ -50,17 +50,17 @@ export function createRouter(api: API): express.Router {
       // Render the list of domains that have already been added.
       domains.length === 0
         ? {
-            type: "Box",
+            type: "ui-box",
             props: { class: "flex justify-between items-center py-2" },
             children: ["No domains yet."],
           }
         : domains.map((domain: string) => ({
-            type: "Box",
+            type: "ui-box",
             props: { class: "flex justify-between items-center py-2" },
             children: [
               domain,
               {
-                type: "Button",
+                type: "ui-button",
                 props: {
                   action: { type: "delete", domain },
                   variant: "danger",
@@ -71,11 +71,11 @@ export function createRouter(api: API): express.Router {
           })),
       // Show a form for adding domains.
       {
-        type: "Form",
+        type: "ui-form",
         children: [
-          { type: "TextField", props: { required: true, name: "domain" } },
+          { type: "ui-text-field", props: { required: true, name: "domain" } },
           {
-            type: "Button",
+            type: "ui-button",
             props: {
               submit: true,
               variant: "primary",
