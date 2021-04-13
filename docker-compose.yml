@@ -2,14 +2,12 @@ version: "3.7"
 
 services:
   emulator:
-    init: true
     image: ghcr.io/badrap/emulator:v0.10.0
     environment:
       APP_URL: http://localhost:4005/app
     network_mode: service:app
 
   app:
-    init: true
     user: node
     build:
       target: dev
