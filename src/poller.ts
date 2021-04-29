@@ -40,7 +40,14 @@ async function pollOnce(api: API): Promise<void> {
 
       const assets: Asset[] = [];
       for (const domain of domains) {
-        const ips = await dns.resolve4(domain);
+        let ips: string[] = [];
+        try {
+          ips = await dns.resolve4(domain);
+        } catch (err) {
+          if (err.code !== "ENOTFOUND") {
+            console.error(err);
+          }
+        }
         for (const ip of ips) {
           assets.push({
             type: "ip",
