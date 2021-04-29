@@ -100,33 +100,6 @@ export class API<InstallationState extends AnyState = AnyState> {
     return result;
   }
 
-  async seal(data: unknown, expiresIn: number): Promise<string> {
-    const result = await this.request(new URL("seal", this.baseUrl), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        expiresIn,
-        data,
-      }),
-    }).then((r) => r.json());
-    return result.data;
-  }
-
-  async unseal(data: string): Promise<any> {
-    const result = await this.request(new URL("unseal", this.baseUrl), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        data,
-      }),
-    }).then((r) => r.json());
-    return result.data;
-  }
-
   async getInstallations(): Promise<{ id: string; removed: boolean }[]> {
     return this.request(new URL("installations", this.baseUrl), {
       method: "GET",
