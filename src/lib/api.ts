@@ -48,14 +48,11 @@ export class API<InstallationState extends AnyState = AnyState> {
     this.baseUrl.pathname = path.posix.join(this.baseUrl.pathname, "app/");
   }
 
-  private installationUrl(installationId: string, path?: string): URL {
-    if (!installationId.match(/^[a-z0-9_-]{1,}$/i)) {
+  private installationUrl(installationId: string): URL {
+    if (!installationId.match(/^[a-z0-9_-]+$/i)) {
       throw new Error("invalid installation ID");
     }
     const url = new URL(`installations/${installationId}`, this.baseUrl);
-    if (path) {
-      url.pathname += `/${path}`;
-    }
     url.pathname = url.pathname.replace(/\/+/g, "/");
     return url;
   }
@@ -104,43 +101,6 @@ export class API<InstallationState extends AnyState = AnyState> {
     return this.request(new URL("installations", this.baseUrl), {
       method: "GET",
     }).then((r) => r.json());
-  }
-
-  async createInstallationCallback(
-    installationId: string,
-    sessionId: string,
-    callback: {
-      action?: unknown;
-      clientState?: Record<string, unknown>;
-    } = {}
-  ): Promise<string> {
-    const { url } = await this.request(
-      this.installationUrl(installationId, "/callbacks"),
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          sessionId,
-          action: callback.action,
-          clientState: callback.clientState,
-        }),
-      }
-    ).then((r) => r.json());
-    return url;
-  }
-
-  async getInstallation(
-    installationId: string
-  ): Promise<Installation<InstallationState>> {
-    const { removed, state } = await this.request(
-      this.installationUrl(installationId),
-      {
-        method: "GET",
-      }
-    ).then((r) => r.json());
-    return { removed, state };
   }
 
   async updateInstallation(
