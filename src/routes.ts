@@ -16,10 +16,11 @@ export function createRouter(api: API): express.Router {
   });
 
   router.post("/ui", express.json(), async (req, res) => {
-    const { action = {}, clientState = {} } = req.body;
+    const { action = {}, client_state: clientState = {} } = req.body;
+    const { installation_id: installationId } = res.locals.token;
 
     const { state } = await api.updateInstallation(
-      res.locals.token.installationId,
+      installationId,
       ({ state }) => {
         if (action.type === "add") {
           const domain = clientState.domain;
