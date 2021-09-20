@@ -2,6 +2,10 @@ import crypto from "crypto";
 import { promises as dns } from "dns";
 import { API, Asset, RequestError } from "./lib/api";
 
+function isNodeError(err: unknown): err is NodeJS.ErrnoException {
+  return err instanceof Error;
+}
+
 // Update the assets for all installations continuously,
 // rechecking them every 10 seconds.
 export async function poll(api: API): Promise<void> {
@@ -44,7 +48,7 @@ async function pollOnce(api: API): Promise<void> {
         try {
           ips = await dns.resolve4(domain);
         } catch (err) {
-          if (err.code !== "ENOTFOUND") {
+          if (!isNodeError(err) || err.code !== "ENOTFOUND") {
             console.error(err);
           }
         }
