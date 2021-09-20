@@ -17,7 +17,7 @@ export function createRouter(api: API): express.Router {
 
   router.post("/ui", express.json(), async (req, res) => {
     const { action = {}, client_state: clientState = {} } = req.body;
-    const { installation_id: installationId } = res.locals.token;
+    const { installationId } = res.locals.token;
 
     const { state } = await api.updateInstallation(
       installationId,

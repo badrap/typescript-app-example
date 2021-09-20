@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   emulator:
-    image: ghcr.io/badrap/emulator:v0.11.0
+    image: ghcr.io/badrap/emulator:v0.13.1
     environment:
       APP_URL: http://localhost:4005/app
     network_mode: service:app

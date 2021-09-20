@@ -94,7 +94,12 @@ export class API<InstallationState extends AnyState = AnyState> {
         token,
       }),
     }).then((r) => r.json());
-    return result;
+    const {
+      installation_id: installationId,
+      session_id: sessionId,
+      expires_at: expiresAt,
+    } = result;
+    return { installationId, sessionId, expiresAt };
   }
 
   async getInstallations(): Promise<{ id: string; removed: boolean }[]> {
