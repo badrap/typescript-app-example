@@ -1,0 +1,34 @@
+volumes:
+  node_modules: {}
+
+services:
+  workspace:
+    build:
+      target: workspace
+      context: .
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    ports:
+      - "127.0.0.1:4004:4004"
+      - "127.0.0.1:4005:4005"
+
+  app:
+    build:
+      target: workspace
+      context: .
+    command: npm run dev
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    environment:
+      API_URL: http://localhost:4004/api
+      API_TOKEN: 111111111-2222-3333-44444-555555555555
+    network_mode: service:workspace
+
+  emulator:
+    image: ghcr.io/badrap/emulator:0.16.4
+    environment:
+      APP_URL: http://localhost:4005/app
+    network_mode: service:workspace

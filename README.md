@@ -1,10 +1,18 @@
 # typescript-app-example
 
-## Development with VSCode devcontainers
+## Starting the development containers
 
-Instead of running docker-compose from the command line you can use Visual Studio Code's
+Start the development environment with the following command:
+
+```sh
+docker compose up --build
+```
+
+## Development with VSCode
+
+Once Docker Compose is running you can use Visual Studio Code's
 [Remote Development extension pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
-to automatically bootstrap an development environment with appropriate VSCode extensions and such.
+to automatically attach to the development environment with appropriate VSCode extensions and such.
 
 Install the extension (and other requirements - see ["Developing inside a Container"](https://code.visualstudio.com/docs/remote/containers)).
 
@@ -14,14 +22,12 @@ The first time opening the directory in a container will take a while, as it ins
 
 When the devcontainer is running the UI for the app is served at http://localhost:4004.
 
-To see emulator's and the app's logs run `docker-compose logs -f` on the command line **outside the devcontainer**.
+## Shutting down the devcontainer
 
-## Development without VSCode devcontainers
-
-Start the development environment with the following command:
+If you want to remove the created containers and their state, run the following command:
 
 ```sh
-$ docker-compose up --build
+docker compose down -v
 ```
 
 ## Building for production

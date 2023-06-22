@@ -1,14 +1,17 @@
 {
-  "name": "Existing Docker Compose (Extend)",
-  "dockerComposeFile": ["../docker-compose.yml"],
-  "service": "app",
+  "name": "typescript-example-app",
+  "dockerComposeFile": ["../compose.yml"],
+  "service": "workspace",
+  "shutdownAction": "none",
+  "remoteUser": "node",
   "workspaceFolder": "/app",
-  "settings": {
-    "terminal.integrated.shell.linux": null
-  },
-  "extensions": [
-    "ms-azuretools.vscode-docker",
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode"
-  ]
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  }
 }

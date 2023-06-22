@@ -1,7 +1,7 @@
-import { AddressInfo } from "net";
+import { AddressInfo } from "node:net";
 import express from "express";
 import morgan from "morgan";
-import { API } from "./lib/api";
+import { API } from "@badrap/libapp/api";
 import { createRouter } from "./routes";
 import { poll } from "./poller";
 

@@ -1,6 +1,6 @@
-import crypto from "crypto";
-import { promises as dns } from "dns";
-import { API, Asset, RequestError } from "./lib/api";
+import crypto from "node:crypto";
+import { promises as dns } from "node:dns";
+import { API, Asset, HTTPError } from "@badrap/libapp/api";
 
 function isNodeError(err: unknown): err is NodeJS.ErrnoException {
   return err instanceof Error;
@@ -13,21 +13,21 @@ export async function poll(api: API): Promise<void> {
     try {
       await pollOnce(api);
     } catch (err) {
-      if (err instanceof RequestError) {
+      if (err instanceof HTTPError) {
         console.log(err);
       } else {
         throw err;
       }
     }
     await new Promise((resolve) => {
-      setTimeout(resolve, 10000);
+      setTimeout(resolve, 10_000);
     });
   }
 }
 
 // Go through the installation list once.
 // Update the assets for each installation.
-async function pollOnce(api: API): Promise<void> {
+async function pollOnce(api: API<any>): Promise<void> {
   // Get the list of installation list.
   const installations = await api.getInstallations();
 

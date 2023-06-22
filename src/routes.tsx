@@ -1,8 +1,8 @@
 import express from "express";
 import Router from "express-promise-router";
-import { API } from "./lib/api";
+import { API } from "@badrap/libapp/api";
 
-export function createRouter(api: API): express.Router {
+export function createRouter(api: API<any>): express.Router {
   const router = Router();
 
   router.use(async (req, res) => {
@@ -48,44 +48,28 @@ export function createRouter(api: API): express.Router {
 
     const { domains = [] } = state;
     res.json([
-      // Render the list of domains that have already been added.
-      domains.length === 0
-        ? {
-            type: "ui-box",
-            props: { class: "flex justify-between items-center py-2" },
-            children: ["No domains yet."],
-          }
-        : domains.map((domain: string) => ({
-            type: "ui-box",
-            props: { class: "flex justify-between items-center py-2" },
-            children: [
-              domain,
-              {
-                type: "ui-button",
-                props: {
-                  action: { type: "delete", domain },
-                  variant: "danger",
-                },
-                children: ["Delete"],
-              },
-            ],
-          })),
+      domains.length === 0 ? (
+        // Render the list of domains that have already been added.
+        <ui-box class="flex justify-between items-center py-2">
+          No domains yet.
+        </ui-box>
+      ) : (
+        domains.map((domain: string) => (
+          <ui-box class="flex justify-between items-center py-2">
+            {domain}
+            <ui-button variant="danger" action={{ type: "delete", domain }}>
+              Delete
+            </ui-button>
+          </ui-box>
+        ))
+      ),
       // Show a form for adding domains.
-      {
-        type: "ui-form",
-        children: [
-          { type: "ui-text-field", props: { required: true, name: "domain" } },
-          {
-            type: "ui-button",
-            props: {
-              submit: true,
-              variant: "primary",
-              action: { type: "add" },
-            },
-            children: ["Add a domain"],
-          },
-        ],
-      },
+      <ui-form>
+        <ui-text-field required name="domain" />
+        <ui-button submit variant="primary" action={{ type: "add" }}>
+          Add a domain
+        </ui-button>
+      </ui-form>,
     ]);
   });
 
