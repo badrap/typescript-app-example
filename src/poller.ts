@@ -27,11 +27,8 @@ export async function poll(api: API): Promise<void> {
 // Go through the installation list once.
 // Update the assets for each installation.
 async function pollOnce(api: API<any>): Promise<void> {
-  // Get the list of installation list.
-  const installations = await api.getInstallations();
-
-  for (const { id, removed } of installations) {
-    // Clean up installations of removed users (etc.)
+  for await (const { id, removed } of api.listInstallations()) {
+    // Clean up removed installations.
     if (removed) {
       await api.removeInstallation(id);
       continue;
