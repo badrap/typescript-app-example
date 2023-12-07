@@ -2,22 +2,25 @@ import express from "express";
 import Router from "express-promise-router";
 import { API } from "@badrap/libapp/api";
 
+class AuthFailed extends Error {
+  statusCode = 401;
+}
+
+async function auth(req: express.Request, api: API) {
+  const auth = req.headers.authorization ?? "";
+  const match = auth.match(/^Bearer\s+([a-z0-9-._~+/]+=*)$/i);
+  if (!match) {
+    throw new AuthFailed();
+  }
+  return await api.checkAuthToken(match[1]);
+}
+
 export function createRouter(api: API<any>): express.Router {
   const router = Router();
 
-  router.use(async (req, res) => {
-    const auth = req.headers.authorization || "";
-    const match = auth.match(/^Bearer\s+([a-z0-9-._~+/]+=*)$/i);
-    if (!match) {
-      return res.sendStatus(401);
-    }
-    res.locals.token = await api.checkAuthToken(match[1]);
-    return "next";
-  });
-
   router.post("/ui", express.json(), async (req, res) => {
+    const { installationId } = await auth(req, api);
     const { action = {}, client_state: clientState = {} } = req.body;
-    const { installationId } = res.locals.token;
 
     const { state } = await api.updateInstallation(
       installationId,
