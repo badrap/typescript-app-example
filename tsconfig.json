@@ -9,7 +9,7 @@
     "outDir": "./dist",
     "sourceMap": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "@badrap/libapp/ui"
+    "jsxImportSource": "@badrap/libapp"
   },
   "include": ["src/**/*"]
 }
