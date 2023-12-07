@@ -10,7 +10,10 @@ if (!API_URL || !API_TOKEN) {
   throw new Error("env variables API_URL and API_TOKEN are required");
 }
 
-const api = new API(API_URL, API_TOKEN);
+const api = new API({
+  url: API_URL,
+  token: API_TOKEN,
+});
 poll(api).then(() => {
   throw new Error("quit unexpectedly");
 });
@@ -21,8 +24,4 @@ app.use("/app", createRouter(api));
 const server = app.listen(process.env.PORT || 4005, () => {
   const addr = server.address() as AddressInfo;
   console.log(`Listening on port ${addr.port}...`);
-});
-
-process.on("unhandledRejection", (err) => {
-  throw err;
 });

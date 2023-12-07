@@ -28,7 +28,7 @@ services:
     network_mode: service:workspace
 
   emulator:
-    image: ghcr.io/badrap/emulator:0.16.4
+    image: ghcr.io/badrap/emulator:0.16.7
     environment:
       APP_URL: http://localhost:4005/app
     network_mode: service:workspace
