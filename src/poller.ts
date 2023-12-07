@@ -1,5 +1,6 @@
-import crypto from "node:crypto";
-import { promises as dns } from "node:dns";
+import { createHash } from "node:crypto";
+import { resolve4 } from "node:dns/promises";
+import { setTimeout as sleep } from "node:timers/promises";
 import { API, Asset, HTTPError } from "@badrap/libapp/api";
 
 function isNodeError(err: unknown): err is NodeJS.ErrnoException {
@@ -7,7 +8,7 @@ function isNodeError(err: unknown): err is NodeJS.ErrnoException {
 }
 
 // Update the assets for all installations continuously,
-// rechecking them every 10 seconds.
+// rechecking them every 15 seconds.
 export async function poll(api: API): Promise<void> {
   for (;;) {
     try {
@@ -19,9 +20,7 @@ export async function poll(api: API): Promise<void> {
         throw err;
       }
     }
-    await new Promise((resolve) => {
-      setTimeout(resolve, 10_000);
-    });
+    await sleep(15_000);
   }
 }
 
@@ -46,7 +45,7 @@ async function pollOnce(api: API<any>): Promise<void> {
       for (const domain of domains) {
         let ips: string[] = [];
         try {
-          ips = await dns.resolve4(domain);
+          ips = await resolve4(domain);
         } catch (err) {
           if (!isNodeError(err) || err.code !== "ENOTFOUND") {
             console.error(err);
@@ -56,7 +55,7 @@ async function pollOnce(api: API<any>): Promise<void> {
           assets.push({
             type: "ip",
             value: ip,
-            key: crypto.createHash("sha256").update(domain).digest("base64"),
+            key: createHash("sha256").update(domain).digest("base64"),
             props: {
               title: domain,
             },

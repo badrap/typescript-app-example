@@ -46,7 +46,7 @@ export function createRouter(api: API<any>): express.Router {
           state.domains.splice(index, 1);
           return { state };
         }
-      }
+      },
     );
 
     const { domains = [] } = state;
