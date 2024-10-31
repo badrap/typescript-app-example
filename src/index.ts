@@ -1,27 +1,52 @@
-import { AddressInfo } from "node:net";
-import express from "express";
-import morgan from "morgan";
 import { API } from "@badrap/libapp/api";
-import { createRouter } from "./routes";
+import * as v from "@badrap/valita";
+import { serve } from "@hono/node-server";
+import { Hono } from "hono";
+import { logger } from "hono/logger";
 import { poll } from "./poller";
+import { createRouter } from "./router";
+import { State } from "./types";
 
-const { API_URL, API_TOKEN, NODE_ENV } = process.env;
-if (!API_URL || !API_TOKEN) {
-  throw new Error("env variables API_URL and API_TOKEN are required");
-}
+const env = v
+  .object({
+    NODE_ENV: v.string().default("production"),
+    PORT: v
+      .string()
+      .default("4005")
+      .chain((s) => {
+        const n = Number(s);
+        if (s.trim() && !isNaN(n)) {
+          return v.ok(n);
+        }
+        return v.err("not a valid port");
+      }),
+    API_URL: v.string(),
+    API_TOKEN: v.string(),
+  })
+  .parse(process.env, { mode: "strip" });
 
 const api = new API({
-  url: API_URL,
-  token: API_TOKEN,
-});
-poll(api).then(() => {
-  throw new Error("quit unexpectedly");
+  url: env.API_URL,
+  token: env.API_TOKEN,
+  stateType: State,
 });
 
-const app = express();
-app.use(morgan(NODE_ENV === "production" ? "combined" : "dev"));
-app.use("/app", createRouter(api));
-const server = app.listen(process.env.PORT || 4005, () => {
-  const addr = server.address() as AddressInfo;
-  console.log(`Listening on port ${addr.port}...`);
-});
+async function run(): Promise<void> {
+  const app = new Hono();
+
+  if (env.NODE_ENV === "development") {
+    app.use(logger());
+  }
+
+  app.route("/", createRouter(api));
+
+  serve({ fetch: app.fetch, port: 4005 }, (addr) => {
+    console.log(`Listening on port ${addr.port}...`);
+  });
+
+  poll(api).then(() => {
+    throw new Error("quit unexpectedly");
+  });
+}
+
+void run();
