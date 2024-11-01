@@ -40,7 +40,7 @@ async function run(): Promise<void> {
 
   app.route("/", createRouter(api));
 
-  serve({ fetch: app.fetch, port: 4005 }, (addr) => {
+  serve({ fetch: app.fetch, port: env.PORT }, (addr) => {
     console.log(`Listening on port ${addr.port}...`);
   });
 
