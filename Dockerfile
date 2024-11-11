@@ -1,5 +1,5 @@
 # Define the base image used for the rest of the steps
-FROM node:20-alpine AS base
+FROM node:22-alpine AS base
 RUN apk add --no-cache tini
 ENTRYPOINT ["/sbin/tini", "--"]
 RUN mkdir /app && chown node:node app
