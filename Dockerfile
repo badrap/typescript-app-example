@@ -38,5 +38,5 @@ RUN npm run build
 FROM base
 COPY --from=prod --chown=node:node /app/node_modules /app/node_modules
 COPY --from=build --chown=node:node /app/dist /app/dist
-ENV NODE_ENV production
+ENV NODE_ENV=production
 CMD ["node", "--enable-source-maps", "dist/index.js"]
