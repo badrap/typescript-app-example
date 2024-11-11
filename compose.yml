@@ -1,4 +1,12 @@
 services:
+  install-deps:
+    build:
+      target: workspace
+      context: .
+    command: npm ci
+    volumes:
+      - .:/app
+
   workspace:
     build:
       target: workspace
@@ -6,6 +14,9 @@ services:
     command: /bin/sh -c "while sleep 1000; do :; done"
     volumes:
       - .:/app
+    depends_on:
+      install-deps:
+        condition: service_completed_successfully
 
   app:
     build:
@@ -19,6 +30,9 @@ services:
       API_TOKEN: 111111111-2222-3333-44444-555555555555
     ports:
       - "127.0.0.1:4005:4005"
+    depends_on:
+      install-deps:
+        condition: service_completed_successfully
 
   emulator:
     image: ghcr.io/badrap/emulator:0.17.14

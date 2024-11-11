@@ -7,17 +7,8 @@ RUN mkdir /app && chown node:node app
 USER 1000
 WORKDIR /app
 
-# Collect development dependencies
-FROM base AS dev
-COPY --chown=node:node .npmrc package.json package-lock.json /app/
-RUN npm ci --no-audit --no-fund
-
-# Collect production dependencies
-FROM dev AS prod
-RUN npm ci --production --no-audit --no-fund
-
-# Visual Studio Code workspace tools & dependencies
-FROM dev AS workspace
+# Visual Studio Code workspace tools
+FROM base AS workspace
 USER root
 RUN apk add --no-cache \
   curl \
@@ -28,6 +19,15 @@ RUN apk add --no-cache \
 # Run as uid=1000(node)
 USER 1000
 ENV NODE_ENV=development
+
+# Collect development dependencies
+FROM base AS dev
+COPY --chown=node:node .npmrc package.json package-lock.json /app/
+RUN npm ci --no-audit --no-fund
+
+# Collect production dependencies
+FROM dev AS prod
+RUN npm ci --production --no-audit --no-fund
 
 # Build the production code
 FROM dev AS build
