@@ -27,7 +27,7 @@ RUN npm ci --no-audit --no-fund
 
 # Collect production dependencies
 FROM dev AS prod
-RUN npm ci --production --no-audit --no-fund
+RUN npm ci --omit=dev --no-audit --no-fund
 
 # Build the production code
 FROM dev AS build
