@@ -1,5 +1,4 @@
 import { API, HTTPError } from "@badrap/libapp/api";
-import { UiNode } from "@badrap/libapp/jsx-runtime";
 import * as v from "@badrap/valita";
 import { Hono, HonoRequest } from "hono";
 import { HTTPException } from "hono/http-exception";
@@ -10,7 +9,7 @@ async function auth(
   api: API,
 ): Promise<{ installationId: string }> {
   const auth = req.header("authorization") ?? "";
-  const [, token] = auth.match(/^Bearer\s+([a-z0-9-._~+/]+=*)$/i) ?? [];
+  const [, token] = /^Bearer\s+([a-z0-9-._~+/]+=*)$/i.exec(auth) ?? [];
   if (!token) {
     throw new HTTPException(401, { message: "bearer token missing" });
   }
@@ -22,14 +21,6 @@ async function auth(
     }
     throw err;
   }
-}
-
-function rendered(node: UiNode) {
-  return new Response(JSON.stringify(node), {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
 }
 
 const UiRequestBody = v.object({
@@ -88,7 +79,7 @@ export function createRouter(api: API<State>): Hono {
       state: { domains },
     } = await api.getInstallation(installationId);
 
-    return rendered(
+    return Response.json(
       <ui-box>
         {/* Render the list of domains that have already been added */}
         {domains.length === 0 ? (
