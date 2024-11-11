@@ -9,17 +9,17 @@ import { State } from "./types";
 
 const env = v
   .object({
-    NODE_ENV: v.string().default("production"),
+    NODE_ENV: v.string().optional(() => "production"),
     PORT: v
       .string()
-      .default("4005")
       .chain((s) => {
         const n = Number(s);
-        if (s.trim() && !isNaN(n)) {
+        if (s.trim() && Number.isInteger(n) && n >= 0 && n < 65536) {
           return v.ok(n);
         }
         return v.err("not a valid port");
-      }),
+      })
+      .optional(() => 4005),
     API_URL: v.string(),
     API_TOKEN: v.string(),
   })
