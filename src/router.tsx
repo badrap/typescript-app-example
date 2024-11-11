@@ -14,7 +14,7 @@ async function auth(
     throw new HTTPException(401, { message: "bearer token missing" });
   }
   try {
-    return api.checkAuthToken(token);
+    return await api.checkAuthToken(token);
   } catch (err) {
     if (err instanceof HTTPError && err.statusCode === 404) {
       throw new HTTPException(403, { message: "invalid token" });
@@ -47,13 +47,14 @@ export function createRouter(api: API<State>): Hono {
     );
 
     switch (action?.type) {
+      case undefined:
+        break;
       case "add":
         await api.updateInstallation(installationId, ({ state }) => {
           const domain = clientState?.domain;
           if (!domain) {
             return;
           }
-          state.domains = state.domains || [];
           if (!state.domains.includes(domain)) {
             state.domains.push(domain);
             return { state };
@@ -62,9 +63,6 @@ export function createRouter(api: API<State>): Hono {
         break;
       case "delete":
         await api.updateInstallation(installationId, ({ state }) => {
-          if (!state.domains) {
-            return;
-          }
           const index = state.domains.indexOf(action.domain);
           if (index < 0) {
             return;

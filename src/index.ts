@@ -41,10 +41,11 @@ async function run(): Promise<void> {
   app.route("/", createRouter(api));
 
   serve({ fetch: app.fetch, port: env.PORT }, (addr) => {
+    // eslint-disable-next-line no-console
     console.log(`Listening on port ${addr.port}...`);
   });
 
-  poll(api).then(() => {
+  await poll(api).then(() => {
     throw new Error("quit unexpectedly");
   });
 }

@@ -1,21 +1,19 @@
 import { createHash } from "node:crypto";
-import { resolve4 } from "node:dns/promises";
+import { resolve4 } from "node:dns";
 import { setTimeout as sleep } from "node:timers/promises";
-import { API, Asset, HTTPError } from "@badrap/libapp/api";
-
-function isNodeError(err: unknown): err is NodeJS.ErrnoException {
-  return err instanceof Error;
-}
+import { type API, type Asset, HTTPError } from "@badrap/libapp/api";
+import type { State } from "./types";
 
 // Update the assets for all installations continuously,
 // rechecking them every 15 seconds.
-export async function poll(api: API): Promise<void> {
+export async function poll(api: API<State>): Promise<void> {
   for (;;) {
     try {
       await pollOnce(api);
     } catch (err) {
       if (err instanceof HTTPError) {
-        console.log(err);
+        // eslint-disable-next-line no-console
+        console.log(err.stack);
       } else {
         throw err;
       }
@@ -26,7 +24,7 @@ export async function poll(api: API): Promise<void> {
 
 // Go through the installation list once.
 // Update the assets for each installation.
-async function pollOnce(api: API<any>): Promise<void> {
+async function pollOnce(api: API<State>): Promise<void> {
   for await (const { id, removed } of api.listInstallations()) {
     // Clean up removed installations.
     if (removed) {
@@ -36,18 +34,24 @@ async function pollOnce(api: API<any>): Promise<void> {
 
     // Use the installation's current state to create an updated list of assets.
     await api.updateInstallation(id, async (installation) => {
-      const domains: string[] = installation.state.domains || [];
+      const { domains } = installation.state;
 
       const assets: Asset[] = [];
       for (const domain of domains) {
-        let ips: string[] = [];
-        try {
-          ips = await resolve4(domain);
-        } catch (err) {
-          if (!isNodeError(err) || err.code !== "ENOTFOUND") {
-            console.error(err);
-          }
-        }
+        const ips = await new Promise<string[]>((resolve) => {
+          resolve4(domain, (err, ips) => {
+            if (err) {
+              if (err.code !== "ENOTFOUND") {
+                // eslint-disable-next-line no-console
+                console.error(err.stack);
+              }
+              resolve([]);
+            } else {
+              resolve(ips);
+            }
+          });
+        });
+
         for (const ip of ips) {
           assets.push({
             type: "ip",
