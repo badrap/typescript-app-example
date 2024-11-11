@@ -9,7 +9,7 @@ WORKDIR /app
 
 # Collect development dependencies
 FROM base AS dev
-COPY --chown=node:node package.json package-lock.json /app/
+COPY --chown=node:node .npmrc package.json package-lock.json /app/
 RUN npm ci --no-audit --no-fund
 
 # Collect production dependencies
