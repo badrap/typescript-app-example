@@ -28,6 +28,7 @@ RUN apk add --no-cache \
 # Run as uid=1000(node)
 USER 1000
 RUN mkdir -p /app/node_modules
+ENV NODE_ENV=development
 
 # Build the production code
 FROM dev AS build

@@ -3,26 +3,24 @@
   "scripts": {
     "typecheck": "tsc --skipLibCheck --noEmit",
     "lint": "eslint --ignore-path .gitignore --max-warnings 0 src",
-    "dev": "node -r ts-node/register --watch src/index.ts",
+    "dev": "tsx watch --clear-screen=false src/index.ts",
     "build": "tsc"
   },
   "devDependencies": {
-    "@types/express": "^4.17.21",
-    "@types/morgan": "^1.9.9",
-    "@types/node": "^20.10.4",
-    "@typescript-eslint/eslint-plugin": "^6.13.2",
-    "@typescript-eslint/parser": "^6.13.2",
-    "eslint": "^8.55.0",
+    "@types/node": "^20.14.8",
+    "@typescript-eslint/eslint-plugin": "^8.12.2",
+    "@typescript-eslint/parser": "^8.12.2",
+    "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.0.1",
-    "prettier": "^3.1.0",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.3.3"
+    "eslint-plugin-prettier": "^5.2.1",
+    "prettier": "^3.3.3",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
   },
   "dependencies": {
-    "@badrap/libapp": "^0.5.0",
-    "express": "^4.18.2",
-    "express-promise-router": "^4.1.1",
-    "morgan": "^1.10.0"
+    "@badrap/libapp": "^0.7.4",
+    "@badrap/valita": "^0.3.11",
+    "@hono/node-server": "^1.13.4",
+    "hono": "^4.6.8"
   }
 }
