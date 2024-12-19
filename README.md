@@ -10,9 +10,7 @@ docker compose up --build
 
 ## Development with VSCode
 
-Once Docker Compose is running you can use Visual Studio Code's
-[Remote Development extension pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
-to automatically attach to the development environment with appropriate VSCode extensions and such.
+Once Docker Compose is running you can use Visual Studio Code's [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) to automatically attach to the development environment with appropriate VSCode extensions and such.
 
 Install the extension (and other requirements - see ["Developing inside a Container"](https://code.visualstudio.com/docs/remote/containers)).
 
