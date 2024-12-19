@@ -7,21 +7,21 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "@eslint/js": "^9.14.0",
-    "@types/node": "^22.9.0",
-    "eslint": "^9.14.0",
+    "@eslint/js": "^9.17.0",
+    "@types/node": "^22.10.2",
+    "eslint": "^9.17.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "prettier": "^3.3.3",
+    "prettier": "^3.4.2",
     "tsx": "^4.19.2",
-    "typescript": "^5.6.3",
-    "typescript-eslint": "^8.13.0"
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.1"
   },
   "dependencies": {
-    "@badrap/libapp": "^0.7.4",
-    "@badrap/valita": "^0.3.11",
-    "@hono/node-server": "^1.13.6",
-    "hono": "^4.6.9"
+    "@badrap/libapp": "^0.7.5",
+    "@badrap/valita": "^0.3.16",
+    "@hono/node-server": "^1.13.7",
+    "hono": "^4.6.14"
   }
 }
