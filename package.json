@@ -1,5 +1,6 @@
 {
   "private": true,
+  "type": "module",
   "scripts": {
     "typecheck": "tsc --skipLibCheck --noEmit",
     "lint": "eslint --max-warnings 0 src",

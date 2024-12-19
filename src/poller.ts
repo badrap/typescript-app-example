@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { resolve4 } from "node:dns";
 import { setTimeout as sleep } from "node:timers/promises";
 import { type API, type Asset, HTTPError } from "@badrap/libapp/api";
-import type { State } from "./types";
+import type { State } from "./types.ts";
 
 // Update the assets for all installations continuously,
 // rechecking them every 15 seconds.

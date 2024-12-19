@@ -2,7 +2,7 @@ import { API, HTTPError } from "@badrap/libapp/api";
 import * as v from "@badrap/valita";
 import { Hono, HonoRequest } from "hono";
 import { HTTPException } from "hono/http-exception";
-import { State } from "./types";
+import { State } from "./types.ts";
 
 async function auth(
   req: HonoRequest,

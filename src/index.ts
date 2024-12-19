@@ -3,9 +3,9 @@ import * as v from "@badrap/valita";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
-import { poll } from "./poller";
-import { createRouter } from "./router";
-import { State } from "./types";
+import { poll } from "./poller.ts";
+import { createRouter } from "./router.tsx";
+import { State } from "./types.ts";
 
 const env = v
   .object({
