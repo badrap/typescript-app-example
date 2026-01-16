@@ -1,10 +1,13 @@
 {
-  "name": "typescript-example-app",
-  "dockerComposeFile": ["../compose.yml"],
+  "name": "@repo/app",
+  "dockerComposeFile": ["./compose.yml"],
   "service": "workspace",
-  "shutdownAction": "none",
+  "shutdownAction": "stopCompose",
   "remoteUser": "node",
   "workspaceFolder": "/app",
+  "postCreateCommand": "pnpm i",
+  "postStartCommand": "pnpm dev:init",
+  "forwardPorts": ["emulator:4004", "workspace:4005", "mailpit:8025"],
   "customizations": {
     "vscode": {
       "extensions": [

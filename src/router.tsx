@@ -1,8 +1,15 @@
-import { API, HTTPError } from "@badrap/libapp/api";
+import { type API, HTTPError } from "@badrap/libapp/api";
+import {
+  Button,
+  Flex,
+  Form,
+  Text,
+  TextField,
+} from "@badrap/libapp/ui/experimental";
 import * as v from "@badrap/valita";
-import { Hono, HonoRequest } from "hono";
+import { Hono, type HonoRequest } from "hono";
 import { HTTPException } from "hono/http-exception";
-import { State } from "./types.ts";
+import { addDomain, getDomains, removeDomain } from "./actions.ts";
 
 async function auth(
   req: HonoRequest,
@@ -37,7 +44,7 @@ const UiRequestBody = v.object({
     .optional(),
 });
 
-export function createRouter(api: API<State>): Hono {
+export function createRouter(api: API): Hono {
   const router = new Hono();
 
   router.post("/app/ui", async (ctx) => {
@@ -47,61 +54,51 @@ export function createRouter(api: API<State>): Hono {
     );
 
     switch (action?.type) {
-      case undefined:
+      case undefined: {
         break;
-      case "add":
-        await api.updateInstallation(installationId, ({ state }) => {
-          const domain = clientState?.domain;
-          if (!domain) {
-            return;
-          }
-          if (!state.domains.includes(domain)) {
-            state.domains.push(domain);
-            return { state };
-          }
-        });
+      }
+      case "add": {
+        const domain = clientState?.domain;
+        if (domain) {
+          await addDomain(api, installationId, domain);
+        }
         break;
-      case "delete":
-        await api.updateInstallation(installationId, ({ state }) => {
-          const index = state.domains.indexOf(action.domain);
-          if (index < 0) {
-            return;
-          }
-          state.domains.splice(index, 1);
-          return { state };
-        });
+      }
+      case "delete": {
+        await removeDomain(api, installationId, action.domain);
         break;
+      }
     }
 
-    const {
-      state: { domains },
-    } = await api.getInstallation(installationId);
+    const domains = await getDomains(api, installationId);
 
     return Response.json(
-      <ui-box>
+      <Flex direction="column" gapY="2" gapX="4">
         {/* Render the list of domains that have already been added */}
         {domains.length === 0 ? (
-          <ui-box class="flex justify-between items-center py-2">
-            No domains yet.
-          </ui-box>
+          <Flex align="center" justify="center">
+            <Text color="gray">No domains yet.</Text>
+          </Flex>
         ) : (
-          domains.map((domain: string) => (
-            <ui-box class="flex justify-between items-center py-2">
-              {domain}
-              <ui-button variant="danger" action={{ type: "delete", domain }}>
+          domains.map((domain) => (
+            <Flex align="center" justify="space-between" gap="4">
+              <Text truncate>{domain}</Text>
+              <Button variant="danger" action={{ type: "delete", domain }}>
                 Delete
-              </ui-button>
-            </ui-box>
+              </Button>
+            </Flex>
           ))
         )}
         {/* Show a form for adding domains */}
-        <ui-form>
-          <ui-text-field required name="domain" />
-          <ui-button submit variant="primary" action={{ type: "add" }}>
-            Add a domain
-          </ui-button>
-        </ui-form>
-      </ui-box>,
+        <Form>
+          <Flex gap="2" pt="4">
+            <TextField required name="domain" />
+            <Button submit variant="primary" action={{ type: "add" }}>
+              Add a domain
+            </Button>
+          </Flex>
+        </Form>
+      </Flex>,
     );
   });
 

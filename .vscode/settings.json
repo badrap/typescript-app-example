@@ -1,13 +1,25 @@
 {
-  "typescript.tsdk": "./node_modules/typescript/lib",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
-  "eslint.format.enable": true,
-  "explorer.excludeGitIgnore": true,
-  "[json][jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/.pnpm-store": true,
+    "**/.cache": true,
+    "**/dist": true
   },
-  "[javascript][javascriptreact][typescript][typescriptreact]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  }
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/.pnpm-store/**": true,
+    "**/.cache": true,
+    "**/dist/**": true
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "prettier.trailingComma": "all",
+  "npm.packageManager": "pnpm"
 }

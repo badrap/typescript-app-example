@@ -3,9 +3,8 @@ import * as v from "@badrap/valita";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
-import { poll } from "./poller.ts";
 import { createRouter } from "./router.tsx";
-import { State } from "./types.ts";
+import { poll } from "./worker.ts";
 
 const env = v
   .object({
@@ -28,26 +27,21 @@ const env = v
 const api = new API({
   url: env.API_URL,
   token: env.API_TOKEN,
-  stateType: State,
 });
 
-async function run(): Promise<void> {
-  const app = new Hono();
+const app = new Hono();
 
-  if (env.NODE_ENV === "development") {
-    app.use(logger());
-  }
-
-  app.route("/", createRouter(api));
-
-  serve({ fetch: app.fetch, port: env.PORT }, (addr) => {
-    // eslint-disable-next-line no-console
-    console.log(`Listening on port ${addr.port}...`);
-  });
-
-  await poll(api).then(() => {
-    throw new Error("quit unexpectedly");
-  });
+if (env.NODE_ENV === "development") {
+  app.use(logger());
 }
 
-void run();
+app.route("/", createRouter(api));
+
+serve({ fetch: app.fetch, port: env.PORT }, (addr) => {
+  // eslint-disable-next-line no-console
+  console.log(`Listening on port ${addr.port}...`);
+});
+
+await poll(api).then(() => {
+  throw new Error("quit unexpectedly");
+});

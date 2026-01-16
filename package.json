@@ -1,28 +1,34 @@
 {
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@10.28.0+sha512.05df71d1421f21399e053fde567cea34d446fa02c76571441bfc1c7956e98e363088982d940465fd34480d4d90a0668bc12362f8aa88000a64e83d0b0e47be48",
   "scripts": {
-    "typecheck": "tsc --skipLibCheck --noEmit",
-    "lint": "eslint --max-warnings 0 src",
-    "dev": "tsx watch --clear-screen=false src/index.ts",
-    "build": "tsc"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.17.0",
-    "@types/node": "^22.10.2",
-    "eslint": "^9.17.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.2.1",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
-    "prettier": "^3.4.2",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.2",
-    "typescript-eslint": "^8.18.1"
+    "fix": "node --run fix:prettier && node --run fix:eslint",
+    "fix:prettier": "prettier --write --cache .",
+    "fix:eslint": "eslint --max-warnings=0 --fix --cache --cache-location=.cache/eslint .",
+    "lint": "node --run lint:prettier && node --run lint:eslint",
+    "lint:prettier": "prettier --check --cache .",
+    "lint:eslint": "eslint --max-warnings=0 --cache --cache-location=.cache/eslint .",
+    "typecheck": "tsc --noEmit",
+    "dev:init": "touch dev.local.env",
+    "dev": "node --run dev:init && tsx watch --include='*.env' --clear-screen=false --env-file=dev.env --env-file-if-exists=dev.local.env src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
   },
   "dependencies": {
-    "@badrap/libapp": "^0.7.5",
-    "@badrap/valita": "^0.3.16",
-    "@hono/node-server": "^1.13.7",
-    "hono": "^4.6.14"
+    "@badrap/libapp": "^0.9.1",
+    "@badrap/valita": "^0.4.6",
+    "@hono/node-server": "^1.19.7",
+    "hono": "^4.11.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^24.10.4",
+    "eslint": "^9.39.2",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "prettier": "^3.7.4",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.50.0"
   }
 }
