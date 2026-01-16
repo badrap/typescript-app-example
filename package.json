@@ -18,17 +18,17 @@
   "dependencies": {
     "@badrap/libapp": "^0.9.1",
     "@badrap/valita": "^0.4.6",
-    "@hono/node-server": "^1.19.7",
-    "hono": "^4.11.1"
+    "@hono/node-server": "^1.19.9",
+    "hono": "^4.11.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
-    "@types/node": "^24.10.4",
+    "@types/node": "^24.10.8",
     "eslint": "^9.39.2",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "prettier": "^3.7.4",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.50.0"
+    "typescript-eslint": "^8.53.0"
   }
 }
