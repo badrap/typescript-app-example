@@ -8,7 +8,8 @@ onlyBuiltDependencies: []
 minimumReleaseAge: 2880
 # Ignore minimumReleaseAge for these explicitly listed packages.
 # Try to keep this list temporary, aim for an empty list of exclusions.
-minimumReleaseAgeExclude: []
+minimumReleaseAgeExclude:
+  ["@badrap/libapp@0.9.3", "prettier@3.8.1", "hono@4.11.5"]
 
 # Don't allow package trust levels has decreased compared to previous releases.
 trustPolicy: no-downgrade

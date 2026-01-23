@@ -13,7 +13,7 @@ services:
       - /home/node/.vscode-server
 
   emulator:
-    image: ghcr.io/badrap/emulator:0.19.10
+    image: ghcr.io/badrap/emulator:0.20.3
     environment:
       APP_URL: http://workspace:4005/app
 

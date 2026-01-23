@@ -16,19 +16,19 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
-    "@badrap/libapp": "^0.9.1",
+    "@badrap/libapp": "^0.9.3",
     "@badrap/valita": "^0.4.6",
     "@hono/node-server": "^1.19.9",
-    "hono": "^4.11.4"
+    "hono": "^4.11.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "@types/node": "^24.10.8",
     "eslint": "^9.39.2",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "prettier": "^3.7.4",
+    "prettier": "^3.8.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.53.0"
+    "typescript-eslint": "^8.53.1"
   }
 }

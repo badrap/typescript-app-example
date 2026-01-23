@@ -7,13 +7,20 @@ import { removeInstallation, updateInstallation } from "./actions.ts";
 export async function poll(api: API): Promise<void> {
   for (;;) {
     try {
-      for await (const { id, removed } of api.listInstallations()) {
+      for await (const { id, status } of api.listInstallations()) {
         try {
-          if (removed) {
-            // Clean up removed installations.
-            await removeInstallation(api, id);
-          } else {
-            await updateInstallation(api, id);
+          switch (status) {
+            case "active":
+              // Update assets for active installations.
+              await updateInstallation(api, id);
+              break;
+            case "paused":
+              // No need to process paused installations, just skip.
+              break;
+            case "uninstalled":
+              // Clean up resources of uninstalled installations.
+              await removeInstallation(api, id);
+              break;
           }
         } catch (err) {
           if (err instanceof HTTPError) {
