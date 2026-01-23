@@ -20,6 +20,5 @@
     "**/dist/**": true
   },
   "typescript.tsdk": "node_modules/typescript/lib",
-  "prettier.trailingComma": "all",
   "npm.packageManager": "pnpm"
 }
