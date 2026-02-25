@@ -6,16 +6,9 @@ services:
       target: workspace
     command: /bin/sh -c "while sleep 1000; do :; done"
     volumes:
-      - ..:/app
-      # Persist home directory over rebuilds,
-      # but also make VSCode reinstall extensions on rebuild.
-      - profile:/home/node
-      - /home/node/.vscode-server
+      - ..:/workspace
 
   emulator:
-    image: ghcr.io/badrap/emulator:0.20.3
+    image: ghcr.io/badrap/emulator:0.21.1
     environment:
       APP_URL: http://workspace:4005/app
-
-volumes:
-  profile:

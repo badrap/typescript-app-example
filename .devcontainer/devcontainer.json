@@ -4,9 +4,23 @@
   "service": "workspace",
   "shutdownAction": "stopCompose",
   "remoteUser": "node",
-  "workspaceFolder": "/app",
+  "workspaceFolder": "/workspace",
+  "mounts": [
+    // Persist the user profile across rebuilds.
+    {
+      "source": "profile-${devcontainerId}",
+      "target": "/home/node",
+      "type": "volume"
+    },
+    {
+      // An anonymous volume that gets destroyed on rebuild,
+      // which allows VS Code to reinstall extensions and dotfiles.
+      "target": "/home/node/.vscode-server",
+      "type": "volume"
+    }
+  ],
   "postCreateCommand": "pnpm i",
-  "postStartCommand": "pnpm dev:init",
+  "postStartCommand": "pnpm workspace:init",
   "forwardPorts": ["emulator:4004", "workspace:4005", "mailpit:8025"],
   "customizations": {
     "vscode": {

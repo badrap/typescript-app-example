@@ -1,7 +1,7 @@
 {
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@10.28.0+sha512.05df71d1421f21399e053fde567cea34d446fa02c76571441bfc1c7956e98e363088982d940465fd34480d4d90a0668bc12362f8aa88000a64e83d0b0e47be48",
+  "packageManager": "pnpm@10.30.2+sha512.36cdc707e7b7940a988c9c1ecf88d084f8514b5c3f085f53a2e244c2921d3b2545bc20dd4ebe1fc245feec463bb298aecea7a63ed1f7680b877dc6379d8d0cb4",
   "scripts": {
     "fix": "node --run fix:prettier && node --run fix:eslint",
     "fix:prettier": "prettier --write --cache .",
@@ -10,25 +10,26 @@
     "lint:prettier": "prettier --check --cache .",
     "lint:eslint": "eslint --max-warnings=0 --cache --cache-location=.cache/eslint .",
     "typecheck": "tsc --noEmit",
+    "workspace:init": "touch dev.local.env",
     "dev:init": "touch dev.local.env",
     "dev": "node --run dev:init && tsx watch --include='*.env' --clear-screen=false --env-file=dev.env --env-file-if-exists=dev.local.env src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js"
   },
   "dependencies": {
-    "@badrap/libapp": "^0.9.3",
+    "@badrap/libapp": "^0.10.2",
     "@badrap/valita": "^0.4.6",
     "@hono/node-server": "^1.19.9",
-    "hono": "^4.11.5"
+    "hono": "^4.12.2"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.2",
+    "@eslint/js": "^10.0.1",
     "@types/node": "^24.10.8",
-    "eslint": "^9.39.2",
+    "eslint": "^10.0.1",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "prettier": "^3.8.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.53.1"
+    "typescript-eslint": "^8.56.0"
   }
 }

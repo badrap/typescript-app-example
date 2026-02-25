@@ -1,5 +1,5 @@
 # Define the base image used for the rest of the steps
-FROM node:24.13.0-alpine AS base
+FROM node:24.14.0-alpine AS base
 # Install Corepack to manage the package manager version. The --force
 # flag is required to allow overriding pre-existing npm and yarn binaries.
 RUN npm install --global --force corepack
@@ -11,7 +11,7 @@ RUN mkdir /app && chown node:node app
 USER 1000
 WORKDIR /app
 # Ensure that the correct version of pnpm is installed
-COPY --chown=node:node package.json ./
+COPY --chown=node:node package.json .
 RUN corepack install \
   && rm package.json
 
@@ -24,19 +24,22 @@ RUN apk add --no-cache \
   git \
   httpie \
   openssh \
-  ripgrep
+  procps-ng \
+  ripgrep \
+  tmux
+RUN mkdir -p /workspace \
+  && chown -R node:node /workspace
 # Run as uid=1000(node)
 USER 1000
-# Allow npm and pnpm to install packages with --global without sudo.
-RUN mkdir ~/.npm-global \
-  && mkdir -p ~/.pnpm-global/bin \
-  && npm config set -L user prefix ~/.npm-global \
-  && pnpm config set -g global-bin-dir ~/.pnpm-global/bin
 ENV NODE_ENV=development
-ENV PATH="$PATH:/home/node/.local/bin:/home/node/.npm-global/bin:/home/node/.pnpm-global/bin"
-# Create directories before (anonymous or named) volumes are be mounted
-# to them, so that the ownership will be correct.
+# Create directories before volumes are mounted to them, so that the
+# ownership will be correct.
 RUN mkdir ~/.vscode-server
+# Allow npm install packages with --global without sudo.
+RUN mkdir ~/.npm-global \
+  && npm config set -L user prefix ~/.npm-global
+# Add typical tool binary locations (e.g. coding agents) to PATH.
+ENV PATH="$PATH:/home/node/.local/bin:/home/node/.npm-global/bin"
 
 FROM base AS dev-deps
 COPY --chown=node:node package.json pnpm-workspace.yaml pnpm-lock.yaml ./
