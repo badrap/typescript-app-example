@@ -9,11 +9,11 @@ importers:
   .:
     dependencies:
       '@badrap/libapp':
-        specifier: ^0.10.2
-        version: 0.10.2
+        specifier: ^0.11.0
+        version: 0.11.0
       '@badrap/valita':
-        specifier: ^0.4.6
-        version: 0.4.6
+        specifier: ^0.5.1
+        version: 0.5.1
       '@hono/node-server':
         specifier: ^1.19.9
         version: 1.19.9(hono@4.12.2)
@@ -48,13 +48,13 @@ importers:
 
 packages:
 
-  '@badrap/libapp@0.10.2':
-    resolution: {integrity: sha512-Nljze0WzE78Fu3b8t/GhHYYoGWoGXMcSUFpdNNpvQHKmr/O1wEezxhZuq4WqPLxvEGZzwmdRtZvDp8LMaHgH9g==}
-    engines: {node: '>=20'}
+  '@badrap/libapp@0.11.0':
+    resolution: {integrity: sha512-wXkcd0BxfwYKa1gWf4ThG9d4Xv+IjM6NiO51F9P1SoSXfndxTwOvPtMpTII8OI1Q7zrdCo7B7pMjlPs3VL9JCw==}
+    engines: {node: '>=22'}
 
-  '@badrap/valita@0.4.6':
-    resolution: {integrity: sha512-4kdqcjyxo/8RQ8ayjms47HCWZIF5981oE5nIenbfThKDxWXtEHKipAOWlflpPJzZx9y/JWYQkp18Awr7VuepFg==}
-    engines: {node: '>= 18'}
+  '@badrap/valita@0.5.1':
+    resolution: {integrity: sha512-TPfz1reW79pXSE/epYJwX/6CYwD13p/bOkSrLfmXzhgSBGgtkmQxFwLSv50M7LsSuFLidvYKYBZFuM7warStIA==}
+    engines: {node: '>= 22'}
 
   '@esbuild/aix-ppc64@0.27.2':
     resolution: {integrity: sha512-GZMB+a0mOMZs4MpDbj8RJp4cw+w1WV5NYD6xzgvzUJ5Ek2jerwfO2eADyI6ExDSUED+1X8aMbegahsJi+8mgpw==}
@@ -634,6 +634,10 @@ packages:
   undici-types@7.16.0:
     resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
 
+  undici@8.2.0:
+    resolution: {integrity: sha512-Z+4Hx9GE26Lh9Upwfnc8C7SsrpBPGaM/Gm6kMFtiG7c+5IvQKlXi/t+9x9DrrCh29cww5TSP9YdVaBcnLDs5fQ==}
+    engines: {node: '>=22.19.0'}
+
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
@@ -652,11 +656,12 @@ packages:
 
 snapshots:
 
-  '@badrap/libapp@0.10.2':
+  '@badrap/libapp@0.11.0':
     dependencies:
-      '@badrap/valita': 0.4.6
+      '@badrap/valita': 0.5.1
+      undici: 8.2.0
 
-  '@badrap/valita@0.4.6': {}
+  '@badrap/valita@0.5.1': {}
 
   '@esbuild/aix-ppc64@0.27.2':
     optional: true
@@ -1178,6 +1183,8 @@ snapshots:
   typescript@5.9.3: {}
 
   undici-types@7.16.0: {}
+
+  undici@8.2.0: {}
 
   uri-js@4.4.1:
     dependencies:
