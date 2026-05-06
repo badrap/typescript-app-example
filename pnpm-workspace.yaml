@@ -13,14 +13,8 @@ trustPolicy: no-downgrade
 # Try to keep this list temporary, aim for an empty list of exclusions.
 trustPolicyExclude: []
 
-# Exit with a non-zero exit code if any dependencies have build scripts but
-# aren't listed in allowBuilds.
-strictDepBuilds: true
 # Package matchers to explicitly allow or disallow script execution.
 # Err on the side of disallowing script execution.
 # Check every now and then whether any of these entries can be removed.
 allowBuilds:
   esbuild: false
-
-# Block transitive dependencies from "exotic sources", like git repositories.
-blockExoticSubdeps: true
