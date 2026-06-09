@@ -97,7 +97,7 @@ export async function updateInstallation(
         resolve4(domain, (err, ips) => {
           if (err) {
             if (err.code !== "ENOTFOUND") {
-              // eslint-disable-next-line no-console
+              // oxlint-disable-next-line no-console
               console.error(err.stack);
             }
             resolve([]);

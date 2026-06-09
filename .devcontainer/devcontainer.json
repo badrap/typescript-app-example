@@ -21,14 +21,34 @@
   ],
   "postCreateCommand": "pnpm i",
   "postStartCommand": "pnpm workspace:init",
-  "forwardPorts": ["emulator:4004", "workspace:4005", "mailpit:8025"],
+  "forwardPorts": ["emulator:4004", "workspace:4005"],
   "customizations": {
     "vscode": {
-      "extensions": [
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
-        "ms-azuretools.vscode-docker"
-      ]
+      "extensions": ["oxc.oxc-vscode"],
+      "settings": {
+        "editor.codeActionsOnSave": {
+          "source.fixAll.oxc": "always"
+        },
+        "editor.defaultFormatter": "oxc.oxc-vscode",
+        "editor.formatOnSave": true,
+        "editor.formatOnSaveMode": "file",
+        "files.exclude": {
+          "**/node_modules": true,
+          "**/.pnpm-store": true,
+          "**/.cache": true,
+          "**/dist": true
+        },
+        "files.watcherExclude": {
+          "**/.git/objects/**": true,
+          "**/.git/subtree-cache/**": true,
+          "**/node_modules/**": true,
+          "**/.pnpm-store/**": true,
+          "**/dist/**": true
+        },
+        "npm.packageManager": "pnpm",
+        "oxc.fixKind": "safe_fix",
+        "oxc.path.node": "/usr/local/bin/node"
+      }
     }
   }
 }

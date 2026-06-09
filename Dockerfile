@@ -1,8 +1,6 @@
 # Define the base image used for the rest of the steps
-FROM node:24.14.0-alpine AS base
-# Install Corepack to manage the package manager version. The --force
-# flag is required to allow overriding pre-existing npm and yarn binaries.
-RUN npm install --global --force corepack
+FROM node:24.16.0-alpine AS base
+RUN corepack enable
 RUN apk add --no-cache tini
 ENTRYPOINT ["/sbin/tini", "--"]
 RUN mkdir /app && chown node:node app
@@ -23,6 +21,7 @@ RUN apk add --no-cache \
   curl \
   git \
   httpie \
+  jq \
   openssh \
   procps-ng \
   ripgrep \

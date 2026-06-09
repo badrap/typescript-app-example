@@ -1,35 +1,31 @@
 {
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@11.0.6+sha512.97f906e1da2bedac3df83cadae04b4753a130092dd49d55cd36825ad3e623e9df3f97754f8f259e699172a360fac569acf2f908e7732bdae3eddb2dcf7e121fd",
   "scripts": {
-    "fix": "node --run fix:prettier && node --run fix:eslint",
-    "fix:prettier": "prettier --write --cache .",
-    "fix:eslint": "eslint --max-warnings=0 --fix --cache --cache-location=.cache/eslint .",
-    "lint": "node --run lint:prettier && node --run lint:eslint",
-    "lint:prettier": "prettier --check --cache .",
-    "lint:eslint": "eslint --max-warnings=0 --cache --cache-location=.cache/eslint .",
-    "typecheck": "tsc --noEmit",
     "workspace:init": "touch dev.local.env",
     "dev:init": "touch dev.local.env",
     "dev": "node --run dev:init && tsx watch --include='*.env' --clear-screen=false --env-file=dev.env --env-file-if-exists=dev.local.env src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node --enable-source-maps dist/index.js",
+    "check": "oxfmt --check && oxlint",
+    "fix": "oxfmt && oxlint --fix"
   },
   "dependencies": {
     "@badrap/libapp": "^0.11.1",
-    "@badrap/valita": "^0.5.1",
-    "@hono/node-server": "^1.19.9",
-    "hono": "^4.12.2"
+    "@badrap/valita": "^0.5.4",
+    "@hono/node-server": "^2.0.4",
+    "hono": "^4.12.23",
+    "ms": "^2.1.3",
+    "sorted-queue": "^0.4.4"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
-    "@types/node": "^24.10.8",
-    "eslint": "^10.0.1",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
-    "prettier": "^3.8.1",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.56.0"
-  }
+    "@types/ms": "^2.1.0",
+    "@types/node": "^25.9.2",
+    "oxfmt": "^0.53.0",
+    "oxlint": "^1.68.0",
+    "oxlint-tsgolint": "^0.23.0",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  },
+  "packageManager": "pnpm@11.5.2+sha512.71c631e382066efc25625d5cf029075de07b61b37f6e27350fbd84b1bda5864c8c1967adc280776b45c30a715c0359a3be08fef42d5bb09e2b99029979692916"
 }

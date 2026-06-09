@@ -5,8 +5,7 @@ A starter template for building badrap.io apps with TypeScript. Use this as a fo
 - **TypeScript** - Strict mode, .tsx support for app UI
 - **Hono** - Web framework
 - **pnpm** - Package manager
-- **ESLint** - Code linting
-- **Prettier** - Code formatting
+- **oxlint and oxfmt** - Code linting and formatting
 - **Docker** - Containerized builds
 - **Devcontainers** - Consistent development environment
 
@@ -43,8 +42,7 @@ Use `dev.local.env` for temporary overrides to avoid accidentally committing sen
 
 Useful commands to run inside the devcontainer:
 
-- `pnpm typecheck` - Type-check the codebase
-- `pnpm lint` - Lint with Prettier + ESLint
+- `pnpm check` - Type-check and lint the codebase
 - `pnpm fix` - Auto-fix lint and formatting issues
 
 ## App structure

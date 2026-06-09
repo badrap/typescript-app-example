@@ -1,10 +1,12 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "module": "nodenext",
+    "target": "esnext",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
 
     "types": ["node"],
     "libReplacement": false,
+    "skipLibCheck": true,
 
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
@@ -19,13 +21,13 @@
     "erasableSyntaxOnly": true,
     "isolatedModules": true,
 
-    "incremental": true,
-    "tsBuildInfoFile": ".cache/tsconfig.tsbuildinfo",
-
     "jsx": "react-jsx",
     "jsxImportSource": "@badrap/libapp",
-    "outDir": "./dist"
+
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "incremental": true,
+    "tsBuildInfoFile": ".cache/tsconfig.tsbuildinfo"
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules", "dist", ".cache"]
+  "include": ["src/**/*"]
 }

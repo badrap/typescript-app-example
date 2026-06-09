@@ -1,0 +1,8 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 80,
+  "ignorePatterns": ["helm-chart/", "deployments/"],
+  "sortImports": {
+    "newlinesBetween": false
+  }
+}

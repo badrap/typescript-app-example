@@ -38,7 +38,7 @@ if (env.NODE_ENV === "development") {
 app.route("/", createRouter(api));
 
 serve({ fetch: app.fetch, port: env.PORT }, (addr) => {
-  // eslint-disable-next-line no-console
+  // oxlint-disable-next-line no-console
   console.log(`Listening on port ${addr.port}...`);
 });
 

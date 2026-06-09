@@ -24,7 +24,7 @@ export async function poll(api: API): Promise<void> {
           }
         } catch (err) {
           if (err instanceof HTTPError) {
-            // eslint-disable-next-line no-console
+            // oxlint-disable-next-line no-console
             console.error(err.stack);
           } else {
             throw err;
@@ -33,7 +33,7 @@ export async function poll(api: API): Promise<void> {
       }
     } catch (err) {
       if (err instanceof HTTPError) {
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line no-console
         console.error(err.stack);
       } else {
         throw err;
